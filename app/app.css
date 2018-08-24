@@ -1,0 +1,11 @@
+.gridList md-grid-list {
+  margin: 8px; }
+
+.gridList .green {
+  background: #b9f6ca; }
+
+.gridList .yellow {
+  background: #ffff8d; }
+
+.gridList .red {
+  background: #ff8a80; }
