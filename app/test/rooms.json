@@ -1,0 +1,34 @@
+[
+	{
+		"identifier": 1,
+		"status": "Started",
+		"startedAt": "2018-08-23T18:35:39.672+0000"
+	},
+	{
+		"identifier": 2,
+		"status": "CustomerAssigned",
+		"assignedCustomerId": 35,
+		"startedAt": "2018-08-23T18:35:39.672+0000"
+	},
+	{
+		"identifier": 3,
+		"status": "CustomerAssigned",
+		"assignedCustomerId": 34,
+		"startedAt": "2018-08-23T18:35:39.672+0000"
+	},
+	{
+		"identifier": 4,
+		"status": "Started",
+		"startedAt": "2018-08-23T18:35:39.672+0000"
+	},
+	{
+		"identifier": 5,
+		"status": "Started",
+		"startedAt": "2018-08-23T18:35:39.672+0000"
+	},
+	{
+		"identifier": 6,
+		"status": "Started",
+		"startedAt": "2018-08-23T18:35:39.672+0000"
+	}
+]

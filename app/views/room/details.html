@@ -1,27 +1,47 @@
-<md-dialog aria-label="{{room.name}}">
-  <form ng-cloak>
+
+<md-dialog aria-label="{{room.status=='Started' ?'Cadastrar' : customer.name}}">
+  <form ng-cloak ng-submit="submit()" ng-controller="RoomController">
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>{{room.name}}</h2>
-        <span flex></span>
+        <h2>{{room.status=='Started' ?'Cadastrar' : customer.name}}</h2>
       </div>
     </md-toolbar>
 
     <md-dialog-content>
-      <div class="md-dialog-content">
-        Content
+      <div class="md-dialog-content" ng-if="room.status=='Started'">
+        <div layout-gt-xs="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Nome</label>
+            <input ng-model="customerForm.name" required>
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block">
+            <label>E-mail</label>
+            <input type="email" ng-model="customerForm.email" required>
+          </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block">
+            <label>CPF</label>
+            <input ng-model="customerForm.cpf" required>
+          </md-input-container>
+        </div>
+      </div>
+      <div class="md-dialog-content" ng-if="room.status=='CustomerAssigned'">      
+        <div class="md-list-item-text">
+          <h3>{{customer.name}}</h3>
+          <h4>{{customer.email}}</h4>
+          <p>{{customer.documentId}}</p>
+        </div>
       </div>
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
-      <md-button>
-      	Bot&atilde;o 1
+      <md-button type="submit" ng-if="room.status=='Started'">
+      	Salvar
       </md-button>
-      <span flex></span>
-      <md-button>
-      	Bot&atilde;o 2
-      </md-button>
-      <md-button ng-click="cancel()">
+      <md-button ng-click="cancel()" id="btCancel">
       	Fechar
       </md-button>
     </md-dialog-actions>
