@@ -122,7 +122,7 @@ function RoomController($scope, $interval, $http, $mdDialog){
 		url = url.replace(/{SESSION_ID}/g, $scope.room.identifier);
 		url = url.replace(/{CUSTOMER_ID}/g, customerData.identifier);
 
-		$http.get(url).then(function(response){
+		$http.put(url).then(function(response){
 			if(typeof response.status != 'undefined' && response.status == 200){
 				$scope.formDialogSuccess();
 				$scope.montaGrid();
