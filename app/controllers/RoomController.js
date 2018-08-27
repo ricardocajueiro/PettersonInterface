@@ -24,10 +24,10 @@ function RoomController($scope, $interval, $http, $mdDialog){
 	// COMENTAR ISSO AQUI
 	// $scope.const.URL_GET_ROOMS = 'http://localhost:8080/app/test/rooms.json'
 	// $scope.const.URL_GET_CUSTOMER = 'http://localhost:8080/app/test/details.json?';
-	// $scope.const.URL_PUT_CUSTOMER = 'http://localhost:8080/app/test/details.json?';
+	// $scope.const.URL_PUT_CUSTOMER = 'http://localhost:8080/app/test/details.json?/client/{CLIENT_ID}/session/{SESSION_ID}/customer/{CUSTOMER_ID}';
 
 	$scope.montaGrid = function(){
-		$http.get($scope.const.URL_GET_ROOMS + '?' + Math.random()).then(function(response){
+		$http.get($scope.const.URL_GET_ROOMS + '?rand=' + Math.random()).then(function(response){
 			$scope.rooms = response.data;
 		});
 	};
@@ -57,9 +57,9 @@ function RoomController($scope, $interval, $http, $mdDialog){
 				$scope.customer = customer;
 				$scope.room = room;
 				$scope.customerForm = {
-					name: 'Ricardo',
-					email: 'ricardo@rcajueiro.eti.br',
-					cpf: '285.507.550-52'
+					name: '',
+					email: '',
+					cpf: ''
 				};
 
 				$scope.cancel = function(){
@@ -118,11 +118,11 @@ function RoomController($scope, $interval, $http, $mdDialog){
 
 	$scope.associaCliente = function(customerData){
 		var url = $scope.const.URL_PUT_CUSTOMER;
-		url = url.replace(/{CLIENT_ID}/g, $scope.room.identifier);
-		url = url.replace(/{SESSION_ID}/g, 1); // ????
+		url = url.replace(/{CLIENT_ID}/g, $scope.room.client.identifier);
+		url = url.replace(/{SESSION_ID}/g, $scope.room.identifier);
 		url = url.replace(/{CUSTOMER_ID}/g, customerData.identifier);
 
-		$http.put(url).then(function(response){
+		$http.get(url).then(function(response){
 			if(typeof response.status != 'undefined' && response.status == 200){
 				$scope.formDialogSuccess();
 				$scope.montaGrid();
