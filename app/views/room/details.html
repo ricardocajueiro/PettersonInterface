@@ -9,22 +9,22 @@
 
     <md-dialog-content>
       <div class="md-dialog-content" ng-if="const.STATUS_AVAILABLE.indexOf(room.status) > -1">
-        <div layout-gt-xs="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Nome</label>
-            <input ng-model="customerForm.name" required>
-          </md-input-container>
+        <div layout-gt-sm="row">
+          <md-radio-group ng-model="customerForm.q" ng-change="showFormCustomerField()">
+            <md-radio-button value="email">Buscar por e-mail</md-radio-button>
+            <md-radio-button value="documentId">Buscar por CPF</md-radio-button>
+          </md-radio-group>
         </div>
         <div layout-gt-sm="row">
-          <md-input-container class="md-block">
+          <md-input-container id="input-email" class="inputForm md-block ng-hide">
             <label>E-mail</label>
-            <input type="email" ng-model="customerForm.email" required>
+            <input type="email" ng-model="customerForm.email">
           </md-input-container>
         </div>
         <div layout-gt-sm="row">
-          <md-input-container class="md-block">
+          <md-input-container id="input-documentId" class="inputForm md-block ng-hide">
             <label>CPF</label>
-            <input ng-model="customerForm.cpf" required ui-br-cpf-mask>
+            <input ng-model="customerForm.documentId" ui-br-cpf-mask>
           </md-input-container>
         </div>
       </div>

@@ -51,15 +51,27 @@ function RoomController($scope, $interval, $http, $mdDialog){
 		}
 	};
 
+
+	$scope.showFormCustomerField = function(){
+		angular.element(document.querySelector("#input-email")).removeClass("ng-hide");
+		angular.element(document.querySelector("#input-documentId")).removeClass("ng-hide");
+
+		if($scope.customerForm.q == 'email'){
+			angular.element(document.querySelector("#input-documentId")).addClass("ng-hide");
+		}else if ($scope.customerForm.q == 'documentId'){
+			angular.element(document.querySelector("#input-email")).addClass("ng-hide");
+		}
+	}
+
 	$scope.showDetailsDialog = function(event, response, room){
 		$mdDialog.show({
 			controller: function ($scope, $mdDialog, customer, room){
 				$scope.customer = customer;
 				$scope.room = room;
 				$scope.customerForm = {
-					name: '',
+					q: '',
 					email: '',
-					cpf: ''
+					documentId: ''
 				};
 
 				$scope.cancel = function(){
@@ -78,9 +90,17 @@ function RoomController($scope, $interval, $http, $mdDialog){
 	}
 
 	$scope.submit = function(){
-		
-		// tenta buscar por e-mail
-		url = $scope.const.URL_GET_CUSTOMER + '?email=' + $scope.customerForm.email + '&rand=' + Math.random();
+		field = $scope.customerForm.q;
+		value = $scope.customerForm[field];
+
+		if(value=='') return;
+
+		if(field == 'documentId'){
+			value = value.match(/\d/g).join('');
+		}
+
+		url = $scope.const.URL_GET_CUSTOMER + '?' + field + '=' + value + '&rand=' + Math.random();
+
 		$http.get(url).then(function(response){
 			if(typeof response.status != 'undefined'
 				&& response.status == 200){
@@ -93,25 +113,7 @@ function RoomController($scope, $interval, $http, $mdDialog){
 					return $scope.formDialogError('Cliente não encontrado.');
 				}
 			}else{
-				// tenta buscar por cpf
-				documentId = $scope.customerForm.cpf.match(/\d/g).join('');
-				url = $scope.const.URL_GET_CUSTOMER + '?documentId=' + documentId + '&rand=' + Math.random();
-				
-				$http.get(url).then(function(response){
-					if(typeof response.status != 'undefined'
-						&& response.status == 200){
-						
-						if(typeof response.data != 'undefined'
-							&& typeof response.data.identifier != 'undefined'
-							&& response.data.identifier > 0){
-								return $scope.associaCliente(response.data);
-							}else{
-								return $scope.formDialogError('Cliente não encontrado.');
-							}
-					}else{
-						return $scope.formDialogError('Erro ao realizar a busca do cliente.');
-					}
-				});
+				return $scope.formDialogError('Erro ao realizar a busca do cliente.');
 			}
 		});
 	};
