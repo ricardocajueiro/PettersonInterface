@@ -1,14 +1,14 @@
 
-<md-dialog aria-label="{{room.status=='Started' ?'Cadastrar' : customer.name}}">
+<md-dialog aria-label="{{const.STATUS_AVAILABLE.indexOf(room.status) > -1 ?'Cadastrar' : customer.name}}">
   <form ng-cloak ng-submit="submit()" ng-controller="RoomController">
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>{{room.status=='Started' ?'Cadastrar' : customer.name}}</h2>
+        <h2>{{const.STATUS_AVAILABLE.indexOf(room.status) > -1 ?'Cadastrar' : customer.name}}</h2>
       </div>
     </md-toolbar>
 
     <md-dialog-content>
-      <div class="md-dialog-content" ng-if="room.status=='Started'">
+      <div class="md-dialog-content" ng-if="const.STATUS_AVAILABLE.indexOf(room.status) > -1">
         <div layout-gt-xs="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Nome</label>
@@ -24,11 +24,11 @@
         <div layout-gt-sm="row">
           <md-input-container class="md-block">
             <label>CPF</label>
-            <input ng-model="customerForm.cpf" required>
+            <input ng-model="customerForm.cpf" required ui-br-cpf-mask>
           </md-input-container>
         </div>
       </div>
-      <div class="md-dialog-content" ng-if="room.status=='CustomerAssigned'">      
+      <div class="md-dialog-content" ng-if="const.STATUS_IN_USE.indexOf(room.status) > -1">      
         <div class="md-list-item-text">
           <h3>{{customer.name}}</h3>
           <h4>{{customer.email}}</h4>
@@ -38,7 +38,7 @@
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
-      <md-button type="submit" ng-if="room.status=='Started'">
+      <md-button type="submit" ng-if="const.STATUS_AVAILABLE.indexOf(room.status) > -1">
       	Salvar
       </md-button>
       <md-button ng-click="cancel()" id="btCancel">

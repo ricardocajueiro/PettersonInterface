@@ -5,21 +5,21 @@
   <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
   <link rel="stylesheet" href="app/app.css">
 </head>
-<body ng-app="PettersonApp" ng-controller="RoomController">
+<body ng-app="PettersonApp" id="RoomController" ng-controller="RoomController">
 
   <md-grid-list md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6" 
   md-row-height-xs="1:1" md-row-height-gt-md="1:1" md-row-height="2:2" 
   md-gutter="12px" md-gutter-gt-sm="8px" class="gridList">
     <md-grid-tile 
     ng-repeat="room in rooms"
-    class="{{room.status == const.STATUS_AVAILABLE ? const.CSS_GRID_GREEN : (room.status == const.STATUS_CLOSED ? const.CSS_GRID_RED : const.CSS_GRID_YELLOW)}}"
+    class="{{const.STATUS_AVAILABLE.indexOf(room.status) > -1 ? const.CSS_GRID_GREEN : (const.STATUS_CLOSED.indexOf(room.status) > -1 ? const.CSS_GRID_RED : const.CSS_GRID_YELLOW)}}"
     md-rowspan="2" md-colspan="2"
     md-colspan-sm="1" md-colspan-xs="1"
     ng-click="details($event, room)">
       <md-grid-tile-header>
-        <h3 ng-if="room.status == const.STATUS_AVAILABLE">{{const.MESSAGE_STATUS_AVAILABLE}}</h3>
-        <h3 ng-if="room.status == const.STATUS_IN_USE">{{const.MESSAGE_STATUS_IN_USE}}</h3>
-        <h3 ng-if="room.status == const.STATUS_CLOSED">{{const.MESSAGE_STATUS_CLOSED}}</h3>
+        <h3 ng-if="const.STATUS_AVAILABLE.indexOf(room.status) > -1">{{const.MESSAGE_STATUS_AVAILABLE}}</h3>
+        <h3 ng-if="const.STATUS_IN_USE.indexOf(room.status) > -1">{{const.MESSAGE_STATUS_IN_USE}}</h3>
+        <h3 ng-if="const.STATUS_CLOSED.indexOf(room.status) > -1">{{const.MESSAGE_STATUS_CLOSED}}</h3>
       </md-grid-tile-header>
       <md-grid-tile-footer>
         <h3>{{room.startedAt | date: 'dd/MM/yyyy H:mm'}}</h3>
@@ -32,6 +32,7 @@
   <script src="node_modules/angular-aria/angular-aria.min.js"></script>
   <script src="node_modules/angular-messages/angular-messages.min.js"></script>
   <script src="node_modules/angular-material/angular-material.min.js"></script>
+  <script src="node_modules/angular-input-masks/releases/angular-input-masks-standalone.min.js"></script>
   
   <script type="text/javascript" src="app/controllers/RoomController.js"></script>
   <script type="text/javascript" src="app/app.js"></script>
